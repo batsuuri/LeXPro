@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Системийн параметер шинэчлэх";
+}
+<legend>
+    <h3 style="font-weight:bold; font-size:x-large">
+        Системийн параметер шинэчлэх
+    </h3>
+</legend>
+<div class="col-sm-12 col-md-8">
+    <div class="row">
+        @using (Html.BeginForm("RefreshParamIndex", "Terminal", null, FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <div class="form-group">
+                    <div class="col-lg-12">
+                        <button type="submit" name="submit" class="btn btn-primary" value="save" id="save">Шинэчлэх</button>
+                    </div>
+            </div>
+
+            if (Func.ToStr(ViewBag.Result) != "")
+            {
+                    <div class="alert alert-info mt10">
+                        <a class="close" data-dismiss="alert" href="#">&times;</a>
+                        <label class="col-lg-11 control-label" for="inputError" id="ResultMessage">@ViewBag.Result</label>
+                    </div>
+            }
+
+        }
+    </div>
+</div>

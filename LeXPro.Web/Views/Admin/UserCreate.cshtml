@@ -1,0 +1,74 @@
+﻿@model LeXPro.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Users";
+}
+
+<div>
+    <br />
+    <table>
+        <tr>
+            <td><img src="~/Content/Images/register.png" /></td>
+            <td class="rbac-formtitle">@ViewBag.Title<p class="rbac-formtitlesub">Create a new user</p></td>
+        </tr>
+    </table>
+</div>
+@using (Html.BeginForm("UserCreate", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+        @Html.AntiForgeryToken()
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+            <br />
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Firstname, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Lastname, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Mobile, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control" })
+                    </div>
+                </div>
+
+            <br />
+            <input class="btn btn-default" type="submit" value="Create" />
+    }
+<div>
+    @Html.ActionLink("Go to Users", "Index", "Admin")
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

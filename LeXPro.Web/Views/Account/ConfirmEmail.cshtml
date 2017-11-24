@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Account Verified";
+}
+
+
+<div>
+    <br />
+    <table>
+        <td><img src="~/Content/Images/result.png" /></td>
+        <td class="rbac-formtitle">@ViewBag.Title<p class="rbac-formtitlesub">Your email address has been successfully verified</p></td>
+    </table>
+</div>
+<div>
+    <hr />
+    <p>
+        Thank you for verifying your email.  You can now @Html.ActionLink("log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) to the website.
+    </p>
+</div>

@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Registered";
+}
+
+
+<div>
+    <br />
+    <table>
+        <td><img src="~/Content/Images/register2.png" /></td>
+        <td class="rbac-formtitle">@ViewBag.Title<p class="rbac-formtitlesub">Your account has been successfully created</p></td>
+    </table>
+</div>
+<div>
+    <hr />
+    <p>
+        Welcome to RBAC!  Your account username is <strong>@ViewBag.Username</strong>
+        <br /><br />
+        In order to verify that the email address associated with your account is correct, we've sent an email to <strong>@ViewBag.Email</strong>
+        <br /><br />
+        To verify your account, all you have to do is click the link sent to you in the verification email. You will receive the link shortly after you create your account.  If you're not sure whether your account is verified, you can find out by logging in to the account. You'll see a message asking you to verify your account if it has not yet been verified.        
+    </p>
+
+</div>

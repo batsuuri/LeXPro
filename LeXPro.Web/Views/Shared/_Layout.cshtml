@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - LeXPro Law Firm | Debt Collect System</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/vendors")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link href="~/Content/ui/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("LeXPro Debt Collect", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("НҮҮР", "Index", "Home")</li>
+                    <li>@Html.ActionLink("ТӨЛБӨР ТӨЛӨГЧ", "CustSearch", "Terminal")</li>
+                    @*<li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">ХЭРЭГЛЭГЧ<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" href="/Terminal/InsOrderIndex">Хэрэглэгч</a></li>
+                            <li><a tabindex="-1" href="/Terminal/AgentIndex">Гэрээ</a></li>
+                        </ul>
+                    </li>*@
+                    <li>@Html.ActionLink("ГҮЙЛГЭЭ", "Tran", "Terminal")</li>
+
+                    @*<li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">ГҮЙЛГЭЭ<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" href="/Terminal/Report">Статистик</a></li>
+                        </ul>
+                    </li>*@
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">ТАЙЛАН<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" href="/Terminal/Report">ГҮЙЛГЭЭ</a></li>
+                        </ul>
+                    </li>
+                    @{                                            
+                        if (this.User.Identity.IsAuthenticated)
+                        {
+                            if (this.User.IsSysAdmin())
+                            {
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Системийн Админ <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a tabindex="-1" href="/Terminal/SysConfigIndex">Ерөнхий тохиргоо</a></li>
+                                        <li><a tabindex="-1" href="/Admin">Хэрэглэгч</a></li>
+                                        @*<li><a tabindex="-1" href="/Admin/RoleIndex">Эрхийн бүлэг</a></li>
+                                        <li><a tabindex="-1" href="/Admin/PermissionIndex">Эрхийн жагсаалт</a></li>*@                                      
+                                        <li><a tabindex="-1" href="/Terminal/RefreshParamIndex">Параметер шинэчлэх</a></li>
+                                    </ul>
+                                </li>
+                            }
+                        }
+                    }
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        
+    </div>
+    <div class="container navbar-fixed-bottom">
+        <footer>
+            <p class="text-right">&copy; @DateTime.Now.Year - LeXPro Law Firm</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/vendors")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

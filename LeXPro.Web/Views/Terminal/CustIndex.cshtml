@@ -1,0 +1,196 @@
+﻿@model LeXPro.Models.CustViewModel
+
+@{
+    ViewBag.Title = "Төлбөр төлөгчийн бүртгэл";
+}
+<legend>
+    <h3 style="font-weight:bold; font-size:x-large">
+        Төлбөр төлөгчийн  бүртгэл
+    </h3>
+</legend>
+<div class="col-sm-12 col-md-10">
+    <div class="row">
+        <div class="panel panel-default bootstrap-admin-no-table-panel">
+            <div class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
+                <div id="tabOrder" class="">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#custTab" data-toggle="tab">Төлбөр төлөгч</a>
+                        </li>
+                        <li>
+                            <a href="#contractTab" data-toggle="tab">Гэрээ</a>
+                        </li>
+                        <li>
+                            <a href="#scheduleTab" data-toggle="tab">Төлбөрийн хуваарь</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content clearfix">
+                        <div class="tab-pane active" id="custTab">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="form-horizontal">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(model => model.cif_id)
+                                    @Html.HiddenFor(model => model.DisplayMode)
+                                    <br />
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Ургийн овог</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.cif_last_name, new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
+                                            @Html.ValidationMessageFor(model => model.cif_last_name, "", new { @class = "text-danger" })
+                                        </div>
+                                        <label class="control-label col-md-2">Хүйс</label>
+                                        <div class="col-md-4">
+                                            <label class="uniform">
+                                                <input class="uniform_on" type="checkbox" id="Sex1" value="1" name="Sex" @(Model.sex=="1"? "checked='Checked'":"")>
+                                                Эрэгтэй
+                                            </label>
+                                            <label class="uniform">
+                                                <input class="uniform_on" type="checkbox" id="Sex2" value="2" name="Sex" @(Model.sex=="2"? "checked='Checked'":"")>
+                                                Эмэгтэй
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Эцэг/эхийн нэр</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.cif_middle_name, new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
+                                            @Html.ValidationMessageFor(model => model.cif_middle_name, "", new { @class = "text-danger" })
+                                        </div>
+                                        <label class="control-label col-md-2">Регистер</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.register_no, new { htmlAttributes = new { @class = "form-control", maxlength = 10 } })
+                                            @Html.ValidationMessageFor(model => model.register_no, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Нэр</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.cif_name, new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
+                                            @Html.ValidationMessageFor(model => model.cif_name, "", new { @class = "text-danger" })
+                                        </div>
+                                        <label class="control-label col-md-2">Төрсөн огноо</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.birth_date, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                                            @Html.ValidationMessageFor(model => model.birth_date, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Гар утас</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
+                                            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                                        </div>
+                                        <label class="control-label col-md-2">Гэрийн утас</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.home_phone, new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
+                                            @Html.ValidationMessageFor(model => model.home_phone, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Имэйл</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", maxlength = 100 } })
+                                            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                                        </div>
+                                        <label class="control-label col-md-2">Фэйсбүүк</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.social_id, new { htmlAttributes = new { @class = "form-control", maxlength = 150 } })
+                                            @Html.ValidationMessageFor(model => model.social_id, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Оршин суугаа хаяг</label>
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.cif_address, new { htmlAttributes = new { @class = "form-control", maxlength =250 } })
+                                            @Html.ValidationMessageFor(model => model.cif_address, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Цахим үнэмлэхний хаяг</label>
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.off_address, new { htmlAttributes = new { @class = "form-control", maxlength = 250 } })
+                                            @Html.ValidationMessageFor(model => model.off_address, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Ажлын газар</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.work_place, new { htmlAttributes = new { @class = "form-control", maxlength = 100 } })
+                                            @Html.ValidationMessageFor(model => model.work_place, "", new { @class = "text-danger" })
+                                        </div>
+                                        <label class="control-label col-md-2">Ажлын утас</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.work_phone, new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
+                                            @Html.ValidationMessageFor(model => model.work_phone, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Ажлын хаяг</label>
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.work_address, new { htmlAttributes = new { @class = "form-control", maxlength = 250 } })
+                                            @Html.ValidationMessageFor(model => model.work_address, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2">Албан тушаал</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.work_position, new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
+                                            @Html.ValidationMessageFor(model => model.work_position, "", new { @class = "text-danger" })
+                                        </div>
+                                        <label class="control-label col-md-2">Мэргэжил</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.profession, new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
+                                            @Html.ValidationMessageFor(model => model.profession, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-primary pull-right" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="tab-pane" id="contractTab">
+                            <h3></h3>
+                            <div id="contractContent">
+                                @if (Model.DisplayMode == "EditOnly")
+                                {
+                                    @Html.Action("Contract", "Terminal", Model.cif_id)
+                                }
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="scheduleTab">
+                            <h3></h3>
+                            <div id="scheduleContent">
+                                @if (Model.DisplayMode == "EditOnly")
+                                {
+                                    @Html.Action("Schedule", "Terminal", Model.cif_id)
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    @Scripts.Render("~/bundles/vendors")
+    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/jqueryui")*@
+
+
+    <script type="text/javascript">
+            $(function () {
+                $('#birth_date').datetimepicker({
+                    useCurrent: false, //Important! See issue #1075
+                    format: 'YYYY-MM-DD'
+                });
+            });
+    </script>
+}

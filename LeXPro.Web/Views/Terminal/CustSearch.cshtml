@@ -1,0 +1,122 @@
+﻿@model LeXPro.Models.CustSearchViewModel
+
+@{
+    ViewBag.Title = "Төлбөр төлөгч хайх";
+}
+<legend>
+    <h3 style="font-weight:bold; font-size:x-large">
+        Төлбөр төлөгч 
+    </h3>
+</legend>
+<div class="col-sm-12 col-md-10">
+    <div class="row">
+        @using (Html.BeginForm("CustSearch", "Terminal", null, FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            if (Func.ToStr(ViewBag.Result) != "")
+            {
+                <div class="has-error">
+                    <label class="control-label" for="inputError">@ViewBag.Result</label>
+                </div>
+            }
+            <div class="panel panel-default bootstrap-admin-no-table-panel">
+                <div class="panel-heading">
+                    <div class="text-muted bootstrap-admin-box-title">Төлбөр төлөгч хайх</div>
+                </div>
+                <div class="bootstrap-admin-no-table-panel-content bootstrap-admin-panel-content collapse in">
+                    <div class="form-horizontal">
+                        <fieldset id="inputs">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="@Model.cif_name">Нэр</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.cif_name, new { @class = "form-control" })
+                                </div>
+                                <label class="col-md-2 control-label" for="@Model.register_no">Регистер</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.register_no, new { @class = "form-control" })
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+
+                                <label class="col-md-2 control-label" for="@Model.phone">Гар утас</label>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(m => m.phone, new { @class = "form-control datepicker" })
+                                </div>
+                                @*<label class="col-md-2 control-label" for="@Model.isOverRun"></label>
+                                <div class="col-md-4">
+                                    <label class="uniform">
+                                        <input class="uniform_on" type="checkbox" id="isOverRun" value="1" name="isOverRun">
+                                        Хугацаа хэтэрсэн
+                                    </label>
+                                </div>*@
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12 ">
+                                    <p>
+                                        @Html.ActionLink("ШИНЭ", "CustNew", "Terminal", null, new { @class = "btn btn-default" })
+                                        <button type="submit" class="btn btn-primary pull-right">ХАЙХ</button>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" id="ConfigContent">
+                <div class="panel-heading">
+                    <div class="text-muted bootstrap-admin-box-title">
+                         Жагсаалт @(Model.List != null ? ":  " + Model.List.Count : ":  0") records found.
+                    </div>
+                </div>
+                <div class="bootstrap-admin-panel-content">
+                    @if (Model.List != null)
+                    {
+                        <table class="table">
+                            <tr class="bootstrap-admin-box-title">
+                                <th>
+                                    Овог нэр
+                                </th>
+                                <th>
+                                    Регистер
+                                </th>
+                                <th>
+                                    Холбоо барих
+                                </th>
+                                <th>
+                                    Ажлын газар
+                                </th>
+                            </tr>
+
+                            @foreach (var item in Model.List)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink(item.cif_name + " " + item.cif_middle_name, "CustIndex", "Terminal", new { id = item.cif_id }, null)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.register_no)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.phone),  @Html.DisplayFor(modelItem => item.home_phone),@Html.DisplayFor(modelItem => item.work_phone)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.work_place)
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    }
+
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(function () {
+       
+    });
+</script>
