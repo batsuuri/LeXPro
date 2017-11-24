@@ -253,18 +253,12 @@ namespace LeXPro.Models
             return res;
         }
 
-        public static Result CustNew(CustViewModel model)
+        public static Result CustInsert(CustViewModel model)
         {
             Result res = new Result();
             int cif_id = 0;
             try
             {
-
-                //1. Insert customer data to table cust with status pending
-                //2. Generate Activation code and send to customer phone 
-                //3. Insert acitvation code to cust_notif table
-                //4. Send result to back
-
                 #region 1. Insert Customer to Database
 
                 #region SQL
@@ -272,7 +266,7 @@ namespace LeXPro.Models
                     BEGIN 
                     SELECT @cif_id= COALESCE(MAX(cif_id),0)+1 from cust;
                     SELECT @contract_id= COALESCE(MAX(contract_id),0)+1 from cust_contract;
-                    INSERT INTO INSERT INTO [dbo].[cust]
+                    INSERT INTO [dbo].[cust]
                                ([cif_id]
                                ,[cif_name]
                                ,[cif_middle_name]
@@ -295,7 +289,7 @@ namespace LeXPro.Models
                                ,[reg_user]
                                ,[status])
                          VALUES
-                               (,@cif_id
+                               (@cif_id
                                 ,@cif_name
                                 ,@cif_middle_name
                                 ,@cif_last_name
@@ -413,10 +407,136 @@ namespace LeXPro.Models
             }
             catch (Exception ex)
             {
-                Main.ErrorLog("CustNew", ex);
+                if (ex.ToString().Contains("UNIQUE")
+                {
+
+                }
+                Main.ErrorLog("CustInsert", ex);
                 res = App.getMsgRes(1003, lang);
             }
             return res;
+        }
+
+        public static Result CustUpdate(CustViewModel model)
+        {
+
+            Result res = new Result();
+            try
+            {
+
+                #region 1. Insert Customer to Database
+
+                #region SQL
+                string sql = @" update cust set
+                                    cif_name = @cif_name,
+                                    cif_middle_name = @cif_middle_name,
+                                    cif_last_name = @cif_last_name,
+                                    sex = @sex,
+                                    cif_address = @cif_address,
+                                    register_no = @register_no,
+                                    birth_date = @birth_date,
+                                    phone = @phone,
+                                    home_phone = @home_phone,
+                                    social_id = @social_id,
+                                    email = @email,
+                                    off_address = @off_address,
+                                    work_place = @work_place,
+                                    work_phone = @work_phone,
+                                    work_address = @work_address,
+                                    work_position = @work_position,
+                                    profession = @profession,
+                                    last_edit_date = @last_edit_date,
+                                    last_edit_user = @last_edit_user
+                                where cif_id = @cif_id;";
+                #endregion
+
+                #region SQL Params
+
+                SqlParameter pCif_Id = new SqlParameter("@cif_id", SqlDbType.Int);
+                SqlParameter pCif_Name = new SqlParameter("@cif_name", SqlDbType.NVarChar, 50);
+                SqlParameter pCif_Middle_Name = new SqlParameter("@cif_middle_name", SqlDbType.NVarChar, 50);
+                SqlParameter pCif_Last_Name = new SqlParameter("@cif_last_name", SqlDbType.NVarChar, 50);
+                SqlParameter pSex = new SqlParameter("@sex", SqlDbType.Char, 1);
+                SqlParameter pCif_Address = new SqlParameter("@cif_address", SqlDbType.NVarChar, 250);
+                SqlParameter pRegister_No = new SqlParameter("@register_no", SqlDbType.NVarChar, 10);
+                SqlParameter pBirth_Date = new SqlParameter("@birth_date", SqlDbType.DateTime);
+                SqlParameter pPhone = new SqlParameter("@phone", SqlDbType.NVarChar, 50);
+                SqlParameter pHome_Phone = new SqlParameter("@home_phone", SqlDbType.NVarChar, 50);
+                SqlParameter pSocial_Id = new SqlParameter("@social_id", SqlDbType.NVarChar, 150);
+                SqlParameter pEmail = new SqlParameter("@email", SqlDbType.NVarChar, 50);
+                SqlParameter pOff_Address = new SqlParameter("@off_address", SqlDbType.NVarChar, 250);
+                SqlParameter pWork_Place = new SqlParameter("@work_place", SqlDbType.NVarChar, 100);
+                SqlParameter pWork_Phone = new SqlParameter("@work_phone", SqlDbType.NVarChar, 50);
+                SqlParameter pWork_Address = new SqlParameter("@work_address", SqlDbType.NVarChar, 250);
+                SqlParameter pWork_Position = new SqlParameter("@work_position", SqlDbType.NVarChar, 50);
+                SqlParameter pProfession = new SqlParameter("@profession", SqlDbType.NVarChar, 50);
+                SqlParameter pLast_Edit_Date = new SqlParameter("@last_edit_date", SqlDbType.DateTime);
+                SqlParameter pLast_Edit_User = new SqlParameter("@last_edit_user", SqlDbType.Int);
+
+                pCif_Id.Value = model.cif_id;
+                pCif_Name.Value = model.cif_name;
+                pCif_Middle_Name.Value = model.cif_middle_name;
+                pCif_Last_Name.Value = model.cif_last_name;
+                pSex.Value = model.sex;
+                pCif_Address.Value = model.cif_address;
+                pRegister_No.Value = model.register_no;
+                pBirth_Date.Value = model.birth_date;
+                pPhone.Value = model.phone;
+                pHome_Phone.Value = model.home_phone;
+                pSocial_Id.Value = model.social_id;
+                pEmail.Value = model.email;
+                pOff_Address.Value = model.off_address;
+                pWork_Place.Value = model.work_place;
+                pWork_Phone.Value = model.work_phone;
+                pWork_Address.Value = model.work_address;
+                pWork_Position.Value = model.work_position;
+                pProfession.Value = model.profession;
+                pLast_Edit_Date.Value = DateTime.Now;
+                pLast_Edit_User.Value = model.last_edit_user;
+
+                #endregion
+
+                res = App.ExecuteNonQuery(sql.ToString(), new SqlParameter[] {
+                                                                         pCif_Id
+                                                                        ,pCif_Name
+                                                                        ,pCif_Middle_Name
+                                                                        ,pCif_Last_Name
+                                                                        ,pSex
+                                                                        ,pCif_Address
+                                                                        ,pRegister_No
+                                                                        ,pBirth_Date
+                                                                        ,pPhone
+                                                                        ,pHome_Phone
+                                                                        ,pSocial_Id
+                                                                        ,pEmail
+                                                                        ,pOff_Address
+                                                                        ,pWork_Place
+                                                                        ,pWork_Phone
+                                                                        ,pWork_Address
+                                                                        ,pWork_Position
+                                                                        ,pProfession
+                                                                        ,pLast_Edit_Date
+                                                                        ,pLast_Edit_User
+                                                                        }
+                                    , lang);
+
+                if (!res.Succeed)
+                {
+                    res = App.getMsgRes(1002, lang);
+                    return res;
+                }
+
+                #endregion
+                res.Data = model;
+
+            }
+            catch (Exception ex)
+            {
+                Main.ErrorLog("CustUpdate", ex);
+                res = App.getMsgRes(1003, lang);
+            }
+            return res;
+
         }
     }
 

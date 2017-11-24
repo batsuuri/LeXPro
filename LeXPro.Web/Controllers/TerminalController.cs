@@ -1,5 +1,5 @@
 ﻿using LeXPro.Models;
-using LeXPro.Models;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,29 +102,59 @@ namespace LeXPro.Controllers
         public ActionResult CustNew()
         {
             CustViewModel model = new CustViewModel();
+            model.sex = "1";
             model.DisplayMode = "NewOnly";
             return View("CustIndex", model);
         }
+        [HttpPost]
+        public ActionResult CustNew(CustViewModel model)
+        {
+            Result res;
+            model.reg_user = HttpContext.GetOwinContext().Authentication.User.Identity.GetUserId();
+            res = TerminalContext.CustInsert(model);
+            if (res.Succeed)
+            {
+                Session["Messeage"] = "Төлбөр төлөгч амжилттай үүсгэлээ.";
+                return CustIndex(Func.ToStr(res.Data));
+            }
+            else
+            {
+                ViewBag.Result = res.Desc;
+                return View("CustIndex", model);
+            }
+        }
         public ActionResult CustIndex(string id)
         {
+            if (Session["Messeage"] !=null)
+            {
+                ViewBag.Result = Session["Messeage"];
+                Session["Messeage"] = null;
+            }
             Result res = TerminalContext.CustGet(id);
 
             if (!res.Succeed)
             {
                 ViewBag.Result = res.Desc;
             }
-            return View(res.Data);
+            return View("CustIndex", res.Data);
         }
         [HttpPost]
         public ActionResult CustIndex(CustViewModel model)
         {
-            //Result res = TerminalContext.CustGet(id);
+            Result res;
 
-            if (!res.Succeed)
+            model.last_edit_user = HttpContext.GetOwinContext().Authentication.User.Identity.GetUserId();
+            res = TerminalContext.CustUpdate(model);
+            if (res.Succeed)
+            {
+                Session["Messeage"] = "Төлбөр төлөгчийн мэдээлэл шинэчлэгдлээ.";
+                return CustIndex(model.cif_id.ToString());
+            }
+            else
             {
                 ViewBag.Result = res.Desc;
+                return View(model);
             }
-            return View(res.Data);
         }
         public ActionResult Contract(string id)
         {

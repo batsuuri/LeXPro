@@ -34,6 +34,15 @@
                                     @Html.HiddenFor(model => model.cif_id)
                                     @Html.HiddenFor(model => model.DisplayMode)
                                     <br />
+                                    @if (Func.ToStr(ViewBag.Result) != "")
+                                    {
+                                        <div class="has-error">
+                                            <a class="close" data-dismiss="alert" href="#">&times;</a>
+                                            <label class="control-label" for="inputError">@ViewBag.Result</label>
+                                        </div>
+                                    
+                                    <br />
+                                    }
                                     <div class="form-group">
                                         <label class="control-label col-md-2">Ургийн овог</label>
                                         <div class="col-md-4">
@@ -152,7 +161,10 @@
                                         </div>
                                     </div>
                                 </div>
+
                             }
+@Html.ActionLink("Go to Search", "CustSearch", "Terminal")
+
                         </div>
                         <div class="tab-pane" id="contractTab">
                             <h3></h3>
